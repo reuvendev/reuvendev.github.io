@@ -16,8 +16,8 @@ html, body {
     outline: none;
 }
 #content_container {
-    width: 30%;
-    height: 70%;
+    width: 50%;
+    height: 50%;
 }
 
 #form_container {
