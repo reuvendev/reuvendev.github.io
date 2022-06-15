@@ -22,7 +22,7 @@ def index():
     """
         Main homepage. Here, users are allowed to create their own rickroll links!
     """
-    return render_template('index.html', allow_ads=ALLOW_ADS)
+    return render_template('rr.html', allow_ads=ALLOW_ADS)
 
 @app.route('/total')
 @cross_origin()
