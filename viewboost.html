@@ -106,5 +106,24 @@ document.write(unescape('%0A%3Cscript%3E%0A%20%20%20%20%20%20var%20firebaseConfi
 document.write(unescape('%3Cscript%20type%3D%22text/javascript%22%3E%0A%20%20window.onload%20%3D%20function%20%28%29%20%7B%0A%20%20%20%20var%20url%20%3D%20document.location.href%0A%20%20%20%20var%20log%20%3D%20document.getElementById%28%22log%22%29%3B%0A%20%20%20%20var%20btn%20%3D%20document.getElementById%28%22in%22%29%3B%0A%20%20%20%20let%20data%20%3D%20%22value%22%3B%0A%20%20%20%20if%28url.includes%28data%29%29%20%7B%0A%20%20%20%20%20%20console.log%28%22true%22%29%3B%0A%20%20%20%20%20%20btn.style.display%20%3D%20%22block%22%3B%0A%20%20%20%20%20%20log.style.display%20%3D%20%22none%22%3B%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20console.log%28%22false%22%29%3B%0A%20%20%20%20%20%20btn.style.display%20%3D%20%22none%22%3B%0A%20%20%20%20%20%20log.style.display%20%3D%20%22block%22%3B%0A%20%20%20%20%7D%0A%7D%0A%3C/script%3E'))
 </script>
 
+<script type="text/javascript">
+    window.onload = function () {
+    
+    var sampleVar;
+
+    function sampleFunction(){    
+      sampleVar = setTimeout(alertFunc, 1000);
+    }
+
+    function alertFunc(){    
+      const nextURL = 'https://reuvendev.tech/viewboost';
+      const nextTitle = 'XCODE Boost';
+      const nextState = { additionalInformation: '' };
+
+      window.history.replaceState(nextState, nextTitle, nextURL);
+    }
+  }
+</script>
+
   </body>
 </html>
