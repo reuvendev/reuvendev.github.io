@@ -64,16 +64,7 @@ html, body {
 }
 
 #keys {
-    display: inline-block;
-    font-size: 30px;
-    font-weight: 900;
-    text-transform: lowercase;
-    letter-spacing: 1px;
-
-
-    background: -webkit-linear-gradient(25deg, #FFBE0B, #FB5607, #FF006E, #8338EC, #3A86FF);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    color: white;
 }
 
 
