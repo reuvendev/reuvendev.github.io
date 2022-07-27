@@ -5,18 +5,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ReuvenDev - Timeline</title>
 </head>
+
 <body>
 
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container bootdey">
 <div class="row gutters">
 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 <div class="card">
 <div class="card-body">
-<div>
-	<h1>ReuvenDev - Timeline</h1>
-	<label>Total viewers: <span id="num"></span></label>
+<div class="mywrapper">
+<span class="tracking-in-expand title">ReuvenDev</span>
 </div>
+<label>Total Viewers: <span id="num"></span></label>
 <!-- Timeline start -->
 <div class="timeline">
 	<!-- <div class="timeline-row">
@@ -401,6 +403,83 @@ a:link {
   color: green;
   background-color: transparent;
   text-decoration: none;
+}
+
+.mywrapper {
+  min-height: 10vh;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: black;
+  font-family: Montserrat;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 100;
+  font-size: 3em;
+}
+
+
+.tracking-in-expand {
+  -webkit-animation: tracking-in-expand 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.5s both;
+  animation: tracking-in-expand 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.5s both;
+}
+
+@-webkit-keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.6;
+  }
+
+  60% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  70% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(-5vh);
+    transform: translateY(-5vh);
+  }
+}
+
+@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.6;
+  }
+
+  60% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  70% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(-5vh);
+    transform: translateY(-5vh);
+  }
 }
 
 </style>
