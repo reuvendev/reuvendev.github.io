@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: reuvendev.tech
+Token: 27f6a1e67b07d35680e4233f3237ddf0138618709730b2c6972edc77a4356036
