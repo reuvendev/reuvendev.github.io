@@ -12,8 +12,9 @@
   <div id="1" class="inputs" style="display: block">
     <label>USERNAME</label>
     <input id="name" type="text" placeholder="31kx************************" />
+    <small id="link">Get your Username here</small>
     <label>QUANTITY</label>
-    <input id="quantity" type="text" placeholder="0 - 1,000" />
+    <input id="quantity" type="text" placeholder="0 - 400" />
     <button id="btn">SUBMIT</button>
   </div>
   <small>use at your own risk</small>
@@ -32,6 +33,11 @@ document.getElementById("btn").addEventListener("click", async function() {
   const response = await fetch(`https://apifbot.vnzzz.repl.co/?username=${username}&quantity=${quantity}`, {
     method: 'GET',
   });
+});
+
+  document.getElementById("link").addEventListener("click", function(event) {
+  event.preventDefault(); // Prevent the default link behavior
+  window.location = "https://www.spotify.com/ph-en/account/overview";
 });
 </script>
 <style type="text/css">
@@ -55,10 +61,16 @@ body {
   font-family: poppins;
 }
 
+label {
+  margin-top: 10px;
+  font-weight: 900;
+  color: #191414;
+}
+
 .container {
   position: relative;
   width: 350px;
-  height: 500px;
+  height: 550px;
   border-radius: 20px;
   padding: 40px;
   box-sizing: border-box;
