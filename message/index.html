@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ReuvenDev - Message</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <style>
+      body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #007aff, #353a40);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .container {
+    max-width: 400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 40px;
+    animation: fade-in 0.5s ease;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h1 {
+    text-align: center;
+    color: #353a40;
+  }
+
+  form {
+    margin-bottom: 20px;
+  }
+
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #037afb;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #353a40;
+  }
+
+  input[type="submit"]:focus {
+    outline: none;
+    box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+  }
+
+  #messages {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+
+ textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    resize: vertical;
+    height: 100px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: #007aff;
+    box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+  }
+
+  .logo {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+    .success-message {
+      color: green;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .terms-link,
+    .privacy-link {
+      color: #037afb;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .terms-content,
+    .privacy-content {
+      display: none;
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Send Me an Anonymous Message</h1>
+  
+    <form id="messageForm">
+      <img class="logo" src="https://cdn.discordapp.com/attachments/1118462097727172740/1126804989256400937/reuvendevLOGO.png" alt="Logo">
+      <textarea id="messageInput" placeholder="Message:" required></textarea>
+      <input type="submit" value="Send">
+    </form>
+  
+    <p id="successMessage" class="success-message"></p>
+    <div>
+      <p>
+        By sending a message, you agree to our <span class="terms-link" onclick="toggleTerms()">Terms of Service</span> and <span class="privacy-link" onclick="togglePrivacy()">Privacy Policy</span>.
+      </p>
+      <div id="termsContent" class="terms-content">
+        <h2>Terms of Service</h2>
+          <p>By using this anonymous messaging service, you agree to the following terms and conditions:</p>
+          <p>1. You must use this service responsibly and refrain from sending any malicious, harmful, or inappropriate content.</p>
+          <p>2. You understand that the messages you send through this service are anonymous and cannot be traced back to you.</p>
+          <p>3. The recipient of the message may choose to respond or not respond, and their response is at their own discretion.</p>
+          <p>4. We reserve the right to monitor and moderate the messages sent through this service to ensure compliance with these terms of service.</p>
+          <p>5. We do not guarantee the delivery or receipt of any messages, as technical issues or other factors may affect the transmission.</p>
+          <p>By using this service, you agree to comply with these terms of service and understand that violation of these terms may result in the suspension or termination of your access to the service.</p>
+      </div>
+      <div id="privacyContent" class="privacy-content">
+        <h2>Privacy Policy</h2>
+          <p>At ReuvenDev, we respect your privacy and are committed to protecting your personal information. This privacy policy outlines how we collect, use, and safeguard the information you provide while using our anonymous messaging service.</p>
+          <p>1. Information Collection: We collect the messages you send through this service, which may include personal information you choose to provide.</p>
+          <p>2. Use of Information: The messages you send are stored for the purpose of delivering the messages to the intended recipient. We do not use the messages for any other purposes.</p>
+          <p>3. Data Security: We implement appropriate security measures to protect your personal information and maintain the confidentiality of the messages sent through this service.</p>
+          <p>4. Third-Party Disclosure: We do not disclose your personal information or the content of the messages to any third parties unless required by law or with your explicit consent.</p>
+          <p>5. Data Retention: We retain the messages for a limited period of time and delete them from our systems after a certain period.</p>
+          <p>By using this service, you consent to the collection, use, and storage of your information as described in this privacy policy.</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; <span id="currentYear"></span> ReuvenDev. All rights reserved.</p>
+    </div>
+  </div>
+  
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDNFiqe0ssOma0jB-S36tX0wLpUK9Lt9yw",
+      authDomain: "reuvendev-5aa9c.firebaseapp.com",
+      databaseURL: "https://reuvendev-5aa9c-default-rtdb.firebaseio.com",
+      projectId: "reuvendev-5aa9c",
+      storageBucket: "reuvendev-5aa9c.appspot.com",
+      messagingSenderId: "892169866046",
+      appId: "1:892169866046:web:e01335f66537ee86233a6f",
+      measurementId: "G-S1LG8ESHB6"
+    };
+    firebase.initializeApp(config);
+  
+    // Get a reference to the database service
+    var database = firebase.database();
+  
+    // Listen for form submission
+    document.getElementById("messageForm").addEventListener("submit", submitMessage);
+  
+    // Function to submit a message
+    function submitMessage(e) {
+      e.preventDefault();
+  
+      // Get the form values
+      var message = document.getElementById("messageInput").value;
+  
+      // Create a new message reference with a unique key
+      var newMessageRef = database.ref("messages").push();
+  
+      // Set the message data
+      newMessageRef.set({
+        message: message
+      })
+      .then(function() {
+        // Clear the form
+        document.getElementById("messageForm").reset();
+  
+        // Display success message
+        document.getElementById("successMessage").textContent = "Message sent successfully.";
+      })
+      .catch(function(error) {
+        console.error("Error sending message:", error);
+      });
+    }
+
+    // Store references to the terms and privacy content elements
+  var termsContent = document.getElementById("termsContent");
+  var privacyContent = document.getElementById("privacyContent");
+
+  // Toggle terms content
+  function toggleTerms() {
+    if (termsContent.style.display === "none") {
+      termsContent.style.display = "block";
+      privacyContent.style.display = "none";
+    } else {
+      termsContent.style.display = "none";
+    }
+  }
+
+  // Toggle privacy content
+  function togglePrivacy() {
+    if (privacyContent.style.display === "none") {
+      privacyContent.style.display = "block";
+      termsContent.style.display = "none";
+    } else {
+      privacyContent.style.display = "none";
+    }
+  }
+
+    // Update copyright year
+    var currentYear = new Date().getFullYear();
+    document.getElementById("currentYear").textContent = currentYear;
+  </script>
+</body>
+</html>

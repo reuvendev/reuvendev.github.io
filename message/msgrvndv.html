@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ReuvenDev - Message</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <style>
+      body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #007aff, #353a40);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .container {
+    margin-bottom: 20px;
+    max-width: 400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 40px;
+    animation: fade-in 0.5s ease;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h1 {
+    text-align: center;
+    color: #353a40;
+  }
+
+  form {
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  #messages {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+
+  .logo {
+    justify-content: center;
+    align-items: center;
+    display: block;
+    max-width: 50%;
+    height: auto;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="messageContainer">
+    <img class="logo" src="https://cdn.discordapp.com/attachments/1118462097727172740/1126804989256400937/reuvendevLOGO.png" alt="Logo">
+    <h1>Anonymous Message</h1>
+    <form id="messageForm">
+      <p></p>
+    </form>
+  </div>
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDNFiqe0ssOma0jB-S36tX0wLpUK9Lt9yw",
+      authDomain: "reuvendev-5aa9c.firebaseapp.com",
+      databaseURL: "https://reuvendev-5aa9c-default-rtdb.firebaseio.com",
+      projectId: "reuvendev-5aa9c",
+      storageBucket: "reuvendev-5aa9c.appspot.com",
+      messagingSenderId: "892169866046",
+      appId: "1:892169866046:web:e01335f66537ee86233a6f",
+      measurementId: "G-S1LG8ESHB6"
+    };
+    firebase.initializeApp(config);
+
+// Get a reference to the database service
+var database = firebase.database();
+
+// Retrieve and display messages
+var messagesRef = database.ref("messages");
+messagesRef.on("value", function(snapshot) {
+  var messageContainer = document.getElementById("messageContainer");
+  messageContainer.innerHTML = "";
+
+  // Loop through each message and display it
+  snapshot.forEach(function(childSnapshot) {
+    var messageId = childSnapshot.key;
+    var messageText = childSnapshot.child("message").val();
+
+    var containerDiv = document.createElement("div");
+    containerDiv.id = "messageContainer_" + messageId; // Set unique ID for each message container
+    containerDiv.classList.add("message-container");
+
+    var messageForm = document.createElement("form");
+    messageForm.id = "messageForm";
+
+    var logoImg = document.createElement("img");
+    logoImg.classList.add("logo");
+    logoImg.src = "https://cdn.discordapp.com/attachments/1118462097727172740/1126804989256400937/reuvendevLOGO.png";
+    logoImg.alt = "Logo";
+    messageForm.appendChild(logoImg);
+
+    var messageTitle = document.createElement("h1");
+    messageTitle.textContent = "Anonymous Message";
+    containerDiv.appendChild(messageForm);
+    containerDiv.appendChild(messageTitle);
+
+    var messageParagraph = document.createElement("p");
+    messageParagraph.textContent = messageText;
+    containerDiv.appendChild(messageParagraph);
+
+    messageContainer.appendChild(containerDiv);
+  });
+}, function(error) {
+  console.error("Error retrieving messages:", error);
+});
+    </script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>
