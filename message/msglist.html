@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ReuvenDev - Message</title>
+  <title>ReuvenDev - Message List</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,9 +10,8 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
       display: flex;
-      align-items: flex-start; /* Align container to the top */
-      justify-content: center; /* Center container horizontally */
-      padding: 20px;
+      align-items: center;
+      justify-content: center;
       height: 100vh;
     }
 
@@ -26,7 +23,6 @@
       border-radius: 40px;
       animation: fade-in 0.5s ease;
     }
-
 
     @keyframes fade-in {
       0% {
@@ -44,14 +40,20 @@
       color: #353a40;
     }
 
-    form {
-      margin-bottom: 20px;
+    ul {
+      list-style-type: none;
+      padding: 0;
     }
 
-    #message {
-      text-align: center;
-      color: #353a40;
-      font-size: 30px;
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      color: #007aff;
+      font-size: 18px;
     }
 
     .logo {
@@ -67,14 +69,14 @@
   </style>
 </head>
 <body>
-
-  <div class="container" id="messageContainer">
+  <div class="container">
     <img class="logo" src="https://cdn.discordapp.com/attachments/1118462097727172740/1126804989256400937/reuvendevLOGO.png" alt="Logo">
-    <h1>Anonymous Message</h1>
-    <hr>
-    <b><p id="message"></p></b>
+    <h1>Message List</h1>
+    <ul id="messageList"></ul>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script>
     // Initialize Firebase
     var config = {
@@ -89,19 +91,32 @@
     };
     firebase.initializeApp(config);
 
-// Get the messageid from the URL parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const messageId = urlParams.get('messageid');
+    // Get a reference to the database service
+    var database = firebase.database();
 
-    // Retrieve the message from the Firebase database
-    var messagesRef = firebase.database().ref("messages/" + messageId);
-    messagesRef.once("value", function(snapshot) {
-      var messageText = snapshot.child("message").val();
-      var messageElement = document.getElementById("message");
-      messageElement.textContent = messageText;
+    // Retrieve and display message IDs
+    var messagesRef = database.ref("messages");
+    messagesRef.on("value", function(snapshot) {
+      var messageList = document.getElementById("messageList");
+
+      // Clear the message list
+      messageList.innerHTML = "";
+
+      // Loop through each message and create a list item with a link
+      snapshot.forEach(function(childSnapshot) {
+        var messageId = childSnapshot.key;
+
+        var listItem = document.createElement("li");
+        var link = document.createElement("a");
+        link.href = "msgrvndv.html?messageid=" + messageId; // Redirect to the message HTML page with the corresponding ID
+        link.textContent = messageId;
+
+        listItem.appendChild(link);
+        messageList.appendChild(listItem);
+      });
     }, function(error) {
-      console.error("Error retrieving message:", error);
+      console.error("Error retrieving message IDs:", error);
     });
-    </script>
+  </script>
 </body>
 </html>
