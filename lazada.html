@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title></title>
-     <meta charset="UTF-8" />
-   </head>
-   <body style="background-color: #005df8;">
-     <center><a href="https://invol.co/clcoa1a"><img style="width: 100%; height: 100%;" src="//reuvendev.tech/assets/img/1610939924-8AD0XwuUvXHwmsTbYTkEF0tTa16oeWTT.jpg"></a></center>  
-   </body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #005df8;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="https://invol.co/clcoa1a" target="_blank">
+            <img id="random-image" src="" alt="Affiliate Image">
+        </a>
+    </div>
+
+    <script>
+        var images = [
+            "assets/img/lazada/1.jpg",
+            "assets/img/lazada/2.jpg",
+            "assets/img/lazada/3.jpg",
+            "assets/img/lazada/4.jpg",
+            "assets/img/lazada/5.jpg",
+            "assets/img/lazada/6.jpg",
+            "assets/img/lazada/7.jpg",
+            "assets/img/lazada/8.jpg",
+            "assets/img/lazada/9.jpg",
+            "assets/img/lazada/10.jpg"
+        ]; // Add the paths to your images here
+
+        function getRandomImage() {
+            var randomIndex = Math.floor(Math.random() * images.length);
+            var randomImage = images[randomIndex];
+            document.getElementById("random-image").src = randomImage;
+        }
+
+        getRandomImage();
+    </script>
+</body>
+
 </html>
