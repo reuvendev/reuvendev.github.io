@@ -179,7 +179,7 @@
   </div>
 
   <div id="tim">
-    <p>Wait <span id="time">00:00</span> to submit.</p>
+    <p id="wt">Wait <span id="time">00:00</span> to submit.</p>
   </div>
 
   <div id="forms" style="display: block; text-align: center;">
@@ -187,7 +187,7 @@
       <div class="form-container">
         <h2>Views</h2>
         <form id="views-form">
-          <label for="views-status">Status:</label>
+          <span id="views-stats">Status:</span>
           <input type="text" id="views-status" placeholder="Video URL">
           <button type="submit" id="Views-button" class="timer-button">Submit</button>
         </form>
@@ -196,7 +196,7 @@
       <div class="form-container">
         <h2>Shares</h2>
         <form id="shares-form">
-          <label for="shares-status">Status:</label>
+          <span id="shares-stats">Status:</span>
           <input type="text" id="shares-status" placeholder="Video URL">
           <button type="submit" id="Shares-button" class="timer-button">Submit</button>
         </form>
@@ -207,7 +207,7 @@
       <div class="form-container">
         <h2>Favorites</h2>
         <form id="favorites-form">
-          <label for="favorites-status">Status:</label>
+          <span id="favorites-stats">Status:</span>
           <input type="text" id="favorites-status" placeholder="Video URL">
           <button type="submit" id="Favorites-button" class="timer-button">Submit</button>
         </form>
@@ -216,7 +216,7 @@
       <div class="form-container">
         <h2>Likes</h2>
         <form id="likes-form">
-          <label for="likes-status">Status:</label>
+          <span id="likes-stats">Status:</span>
           <input type="text" id="likes-status" placeholder="Video URL">
           <button type="submit" id="Likes-button" class="timer-button">Submit</button>
         </form>
@@ -248,10 +248,40 @@
   <script>
 document.getElementById("current-year").textContent = new Date().getFullYear();
   </script>
+
+  <script type="text/javascript">
+    // Firebase
+    var firebaseConfig = {
+      apiKey: "AIzaSyBIZAsKK_Onyot40W2jL6Kvg9YI-hjJtGQ",
+      authDomain: "reuvendev-5aa9c.firebaseapp.com",
+      databaseURL: "reuvendev-5aa9c-default-rtdb.firebaseio.com",
+      projectId: "reuvendev-5aa9c",
+      storageBucket: "reuvendev-5aa9c.appspot.com",
+      messagingSenderId: "892169866046",
+      appId: "1:892169866046:web:e01335f66537ee86233a6f"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // Get a reference to the stats data in the Firebase Realtime Database
+    var statsRef = firebase.database().ref('stats/stats');
+
+    // Listen for changes in the stats data
+    statsRef.on('value', function(snapshot) {
+      var stats = snapshot.val();
+
+      // Update the label values based on the stats data
+      document.getElementById('views-stats').value = stats.views;
+      document.getElementById('shares-stats').value = stats.shares;
+      document.getElementById('favorites-stats').value = stats.favs;
+      document.getElementById('likes-stats').value = stats.flikes;
+    });
+  </script>
+
   <script type="text/javascript">
 var minutes = 0;
 var seconds = 0;
 var timerInterval;
+var wt = document.getElementById("wt");
 var resetButton = document.getElementById("reset-button");
 var buttons = document.getElementsByClassName("timer-button");
 
@@ -273,6 +303,7 @@ function startTimer(duration, display) {
     if (--timer < 1) {
       clearInterval(timerInterval);
       display.textContent = "Timer expired";
+      wt.style.display = "none";
       showButtons(); // Show the buttons when the timer is done
     }
   }, 1000);
@@ -342,21 +373,6 @@ function showButtons() {
   }
 }
 
-function toggleMenu() {
-  var forms = document.getElementById("forms");
-  var termsContainer = document.getElementById("terms-container");
-  var hamburger = document.querySelector(".hamburger");
-
-  if (forms.style.display === "none") {
-    forms.style.display = "block";
-    termsContainer.style.display = "none";
-    hamburger.classList.remove("open");
-  } else {
-    forms.style.display = "none";
-    termsContainer.style.display = "block";
-    hamburger.classList.add("open");
-  }
-}
 
 // Save timer value when leaving the page
 window.addEventListener("beforeunload", function() {
