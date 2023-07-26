@@ -692,10 +692,39 @@ section {
   font-size: 14px;
 }
 
+/* Styles for the logo */
 .hg-logo {
-  width: 30%; 
-  height: auto; 
-  max-width: 100%;
+  width: 30%;
+  height: auto;
+  max-width: 150px; /* Limit the maximum width to 150 pixels to prevent it from becoming too large on larger screens */
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 576px) {
+  .hg-logo {
+    width: 50%; /* Adjust the width for small screens */
+  }
+}
+
+/* Responsive styles for medium screens */
+@media (min-width: 576px) and (max-width: 768px) {
+  .hg-logo {
+    width: 40%; /* Adjust the width for medium screens */
+  }
+}
+
+/* Responsive styles for large screens */
+@media (min-width: 768px) and (max-width: 992px) {
+  .hg-logo {
+    /* No need to change the width for large screens, as it's already set to 30% */
+  }
+}
+
+/* Responsive styles for extra-large screens */
+@media (min-width: 992px) {
+  .hg-logo {
+    /* No need to change the width for extra-large screens, as it's already set to 30% */
+  }
 }
 
 /*--------------------------------------------------------------
