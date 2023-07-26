@@ -135,7 +135,7 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 /* Desktop Navigation */
 .nav-menu {
-  padding: 30px 0 0 0;
+  padding: 30px 0 100% 0;
 }
 .nav-menu * {
   margin: 0;
@@ -196,6 +196,30 @@ h1, h2, h3, h4, h5, h6 {
 .mobile-nav-active #header {
   left: 0;
 }
+
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 12px; /* Adjust the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #149ddd; /* Color of the scrollbar thumb */
+  border-radius: 6px; /* Adjust the border radius for a rounded thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #0c6faa; /* Color of the scrollbar thumb on hover */
+}
+/* For Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #149ddd #f1f1f1;
+}
+
 
 /*--------------------------------------------------------------
 # Hero Section
@@ -370,37 +394,35 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Akills
+# Skills
 --------------------------------------------------------------*/
-.skills .progress {
-  height: 60px;
-  display: block;
-  background: none;
-  border-radius: 0;
+/* Center the icons and skill names in columns */
+.skills-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.skills .progress .skill {
-  padding: 0;
-  margin: 0 0 6px 0;
-  text-transform: uppercase;
-  display: block;
+
+.skills-info {
+  width: calc(50% - 5px);
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.skills-info img {
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+}
+
+.skills-info .skill {
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   color: #050d18;
 }
-.skills .progress .skill .val {
-  float: right;
-  font-style: normal;
-}
-.skills .progress-bar-wrap {
-  background: #dce8f8;
-  height: 10px;
-}
-.skills .progress-bar {
-  width: 1px;
-  height: 10px;
-  transition: 0.9s;
-  background-color: #149ddd;
-}
+
+
 
 /*--------------------------------------------------------------
 # Resume

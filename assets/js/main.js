@@ -141,6 +141,10 @@
     });
   }
 
+ /** year **/
+  const currentYear = new Date().getFullYear();
+  document.getElementById("currentYear").textContent = currentYear;
+
   /**
    * Skills animation
    */
