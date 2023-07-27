@@ -1,396 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ReuvenDev AIO</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReuvenDev Boost</title>
   <style>
     body {
+      margin: 0;
+      font-family: Arial, sans-serif;
       background: linear-gradient(to bottom, #007aff, #353a40);
       background-repeat: no-repeat;
       background-attachment: fixed;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-
-    .header {
-      background-color: #353a40;
-      color: #007aff;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .header h1 {
-      margin: 0;
-    }
-
-    .hamburger {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      cursor: pointer;
-      z-index: 9999;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 25px;
-      height: 3px;
-      background-color: #fff;
-      margin-bottom: 5px;
-      transition: all 0.3s ease;
-    }
-
-    .form-container-group {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      margin-bottom: 40px; /* Add a bottom margin to create space between form groups */
+      align-items: center;
+      height: 100vh;
     }
-    
+    .parent-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .form-container {
-      width: 300px;
-      margin: 20px;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      border-radius: 40px;
-      display: inline-block;
-      vertical-align: top;
-    }
-
-    .form-container h2 {
+      max-width: fit-content;
       text-align: center;
-      margin-bottom: 20px;
-      padding: 10px;
-    }
-
-    .form-container label {
-      display: block;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       margin-bottom: 10px;
-      font-weight: bold;
     }
-
-    .form-container input[type="text"] {
+    .form-container input {
       width: 100%;
       padding: 10px;
       margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .form-container button[type="submit"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
       border: none;
+      border-bottom: 1px solid #ccc;
+      outline: none;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
       background-color: #007aff;
       color: #fff;
-      font-weight: bold;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
+      outline: none;
     }
-
-    .terms-container {
-      max-width: 500px;
-      margin: 20px auto;
-      padding: 20px;
+    .indicator {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .container {
+      width: 90%;
       background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      color: #353a40;
-      display: none;
-      margin: 20px auto;
       padding: 20px;
-    }
-
-    .terms-container h2 {
-      margin-top: 0;
-    }
-
-    .terms-container p {
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
     }
-
-    .footer {
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-
-    /* Hamburger Menu Animation */
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.open span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.open span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-    
-    /* Responsive Styles */
-    @media (min-width: 768px) {
-      .form-container {
-        margin: 0 auto;
-      }
-      
-      .terms-container {
-        margin: 20px auto;
-        max-width: 800px;
-      }
-
-      .form-container-group {
-        display: flex;
-        justify-content: center;
-      }
-
-      .form-container-group .form-container {
-        margin: 0 10px;
-      }
-    }
-
-    #tim {
-      justify-content: center;
-      text-align: center;
-      color: white;
-    }
-
-    .timer-button {
-      display: none;
-    }
-
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>ReuvenDev AIO</h1>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-
-  <div id="tim">
-    <p id="wt">Wait <span id="time">00:00</span> to submit.</p>
-  </div>
-
-  <div id="forms" style="display: block; text-align: center;">
-    <div class="form-container-group">
-      <div class="form-container">
-        <h2>Views</h2>
-        <form id="views-form">
-          <span id="views-stats">Status:</span>
-          <input type="text" id="views-status" placeholder="Video URL">
-          <button type="submit" id="Views-button" class="timer-button">Submit</button>
-        </form>
-      </div>
-
-      <div class="form-container">
-        <h2>Shares</h2>
-        <form id="shares-form">
-          <span id="shares-stats">Status:</span>
-          <input type="text" id="shares-status" placeholder="Video URL">
-          <button type="submit" id="Shares-button" class="timer-button">Submit</button>
-        </form>
-      </div>
+  <div class="parent-container">
+    <div class="form-container">
+      <h2>ReuvenDev Boost</h2>
+      <form id="boostForm">
+        <input type="text" placeholder="Video URL" id="videoURLInput">
+        <button type="button" id="viewsBtn">Views</button>
+        <button type="button" id="sharesBtn">Shares</button>
+        <button type="button" id="favsBtn">Favorites</button>
+        <button type="button" id="likesBtn">Likes</button>
+      </form>
     </div>
 
-    <div class="form-container-group">
-      <div class="form-container">
-        <h2>Favorites</h2>
-        <form id="favorites-form">
-          <span id="favorites-stats">Status:</span>
-          <input type="text" id="favorites-status" placeholder="Video URL">
-          <button type="submit" id="Favorites-button" class="timer-button">Submit</button>
-        </form>
-      </div>
-
-      <div class="form-container">
-        <h2>Likes</h2>
-        <form id="likes-form">
-          <span id="likes-stats">Status:</span>
-          <input type="text" id="likes-status" placeholder="Video URL">
-          <button type="submit" id="Likes-button" class="timer-button">Submit</button>
-        </form>
-      </div>
+    <div class="container">
+      <p class="indicator" id="favsIndicator">Favorites: </p>
+      <p class="indicator" id="likesIndicator">Likes: </p>
+      <p class="indicator" id="sharesIndicator">Shares: </p>
+      <p class="indicator" id="viewsIndicator">Views: </p>
     </div>
-  </div>
+</div>  
+<script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js"></script>
+<script>
+  // Initialize Firebase with your config
+  const firebaseConfig = {
 
-  <div class="terms-container" id="terms-container">
-    <h2>Terms of Service</h2>
-    <p>By using our app, you agree with our terms and conditions.</p>
-    <p>Notice: We are not responsible for any damage/claims in any case. Use at your own risk.</p>
-    <p>Usage: We use cookies to improve your experience.</p>
-    <p>Rights: We have all the rights to change/modify our terms & conditions/privacy policy at any time.</p>
-    <p>If you don't agree with our terms & conditions, you should stop using our services.</p>
-    <p>This section was last updated on 15.07.2020.</p>
+  };
+  firebase.initializeApp(firebaseConfig);
 
-    <h2>Privacy Policy</h2>
-    <p>If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at contact.</p>
-    <p>We consider the privacy of our visitors to be extremely important. This privacy policy document describes in detail the types of personal information is collected and recorded by our app and how we use it.</p>
-    <p>[Your privacy policy statement here]</p>
-  </div>
+</script>
 
-  <div class="footer">
-    &copy; ReuvenDev <span id="current-year"></span>
-  </div>
-
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script>
-document.getElementById("current-year").textContent = new Date().getFullYear();
-  </script>
-
-  <script type="text/javascript">
-    // Firebase
-    var firebaseConfig = {
-
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    // Get a reference to the stats data in the Firebase Realtime Database
-    var statsRef = firebase.database().ref('stats/stats');
-
-    // Listen for changes in the stats data
-    statsRef.on('value', function(snapshot) {
-      var stats = snapshot.val();
-
-      // Update the label values based on the stats data
-      document.getElementById('views-stats').value = stats.views;
-      document.getElementById('shares-stats').value = stats.shares;
-      document.getElementById('favorites-stats').value = stats.favs;
-      document.getElementById('likes-stats').value = stats.flikes;
-    });
-  </script>
-
-  <script type="text/javascript">
-var minutes = 0;
-var seconds = 0;
-var timerInterval;
-var wt = document.getElementById("wt");
-var resetButton = document.getElementById("reset-button");
-var buttons = document.getElementsByClassName("timer-button");
-
-function startTimer(duration, display) {
-  var timer = duration;
-  var minutes, seconds;
-  timerInterval = setInterval(function() {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
-
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    display.textContent = minutes + ":" + seconds;
-
-    setCookie("minutes", minutes.toString(), 1);
-    setCookie("seconds", seconds.toString(), 1);
-
-    if (--timer < 1) {
-      clearInterval(timerInterval);
-      display.textContent = "Timer expired";
-      wt.style.display = "none";
-      showButtons(); // Show the buttons when the timer is done
-    }
-  }, 1000);
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  setCookie("minutes", "00", 1);
-  setCookie("seconds", "00", 1);
-  var display = document.querySelector('#time');
-  display.textContent = "00:00";
-  hideButtons(); // Hide the buttons when the timer is reset
-}
-
-function resetTimerOnClick() {
-  resetTimer();
-}
-
-window.onload = function() {
-  var minutesData = getCookie("minutes");
-  var secondsData = getCookie("seconds");
-  var timerAmount = (90 * 2); // default
-
-  if (minutesData && secondsData) {
-    minutes = parseInt(minutesData);
-    seconds = parseInt(secondsData);
-    timerAmount = minutes * 60 + seconds;
-  }
-
-  var display = document.querySelector('#time');
-  startTimer(timerAmount, display);
-  hideButtons(); // Hide the buttons when the page loads
-};
-
-resetButton.addEventListener("click", resetTimer);
-for (var i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener("click", resetTimerOnClick);
-}
-
-function setCookie(cname, cvalue, exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  var expires = "expires=" + d.toUTCString();
-  document.cookie = cname + "=" + cvalue + "; " + expires;
-}
-
-function getCookie(cname) {
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1);
-    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-  }
-  return "";
-}
-
-function hideButtons() {
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].style.display = "none";
-  }
-}
-
-function showButtons() {
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].style.display = "block";
-  }
-}
-
-
-// Save timer value when leaving the page
-window.addEventListener("beforeunload", function() {
-  setCookie("minutes", minutes.toString(), 1);
-  setCookie("seconds", seconds.toString(), 1);
-});
-
-  </script>
-  <script type="text/javascript">
-    function toggleMenu() {
-      var forms = document.getElementById("forms");
-      var termsContainer = document.getElementById("terms-container");
-      var hamburger = document.querySelector(".hamburger");
-
-      if (forms.style.display === "none") {
-        forms.style.display = "block";
-        termsContainer.style.display = "none";
-        hamburger.classList.remove("open");
-      } else {
-        forms.style.display = "none";
-        termsContainer.style.display = "block";
-        hamburger.classList.add("open");
-      }
-    }
-  </script>
 </body>
 </html>
