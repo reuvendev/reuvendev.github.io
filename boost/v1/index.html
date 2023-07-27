@@ -414,6 +414,20 @@ function _0x24a276(_0x188f80,_0x180646,_0x48ef9d,_0x4520e8,_0x5b4b6b){return _0x
       console.error("Error sending Pushbullet notification:", error);
     });
 
+    // Clear the cookies
+    setCookie("minutes", "", -1);
+    setCookie("seconds", "", -1);
+
+    // Reset the timer amount (change it to your desired duration)
+    var timer_amount = (90 * 2); //default
+
+    // Stop the existing timer (optional but recommended)
+    clearInterval(interval);
+
+    // Restart the timer with the new duration
+    var display = document.querySelector('#time');
+    startTimer(timer_amount, display);
+
     alert("Link Submitted");
   });
 
