@@ -34,6 +34,11 @@
 </div>
 </div>
 
+<div id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading...</div>
+</div>
+
 <script async="async" data-cfasync="false" src="//swindlebeseech.com/cff36a91f8f255a560accdd70c4a348f/invoke.js"></script>
 <div id="container-cff36a91f8f255a560accdd70c4a348f"></div>
 
@@ -295,6 +300,22 @@ function _0x24a276(_0x188f80,_0x180646,_0x48ef9d,_0x4520e8,_0x5b4b6b){return _0x
   firebase.initializeApp(firebaseConfig);
   const database = firebase.database();
 
+  // Function to show the loading overlay
+  function showLoadingOverlay() {
+    document.getElementById('loading-overlay').style.visibility = 'visible';
+  }
+
+  // Function to hide the loading overlay once Firebase data has loaded
+  function hideLoadingOverlay() {
+    document.getElementById('loading-overlay').style.visibility = 'hidden';
+  }
+
+  // Show the loading overlay when the page starts loading
+  window.onload = function() {
+    showLoadingOverlay();
+    displayData(); // Fetch and display Firebase data
+  };
+
   // hrt
   document.querySelector('#hearts').addEventListener('click', function () {
     const link = document.getElementById('heartlink').value;
@@ -544,10 +565,12 @@ function _0x24a276(_0x188f80,_0x180646,_0x48ef9d,_0x4520e8,_0x5b4b6b){return _0x
       updateStatsDisplay(statsData.shares, "shares_stats");
       updateStatsDisplay(statsData.favs, "favs_stats");
 
-      
+      // Hide the loading overlay once data has loaded
+      hideLoadingOverlay();
     }, error => {
       console.error("Error fetching data:", error);
-      
+      // Hide the loading overlay even if there's an error
+      hideLoadingOverlay();
     });
   }
 
