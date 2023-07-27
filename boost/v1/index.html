@@ -49,7 +49,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid2">
 <div class="card m-b-20 card-ortlax">
 <h5 class="card-title mb-3"> Hearts</h5>
-<small style="display: block; color: red;" class="card-title mb-3">UPDATING</small>
+<small id="hearts_stats" style="display: block; color: red;" class="card-title mb-3">UPDATING</small>
 <form action="c2VuZE9nb2xsb3dlcnNfdGlrdG9r">
 <div class="input-group mb-3">
 <input id="heartlink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -64,7 +64,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid4">
 <div class="card m-b-20 card-ortlax">
 <h5 class="card-title mb-3"> Views</h5>
-<small style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
+<small id="views_stats" style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
 <form action="c2VuZC9mb2xsb3dlcnNfdGlrdG9V">
 <div class="input-group mb-3">
 <input id="viewlink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -78,7 +78,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid7">
 <div class="card m-b-20 card-ortlax">
 <h5 class="card-title mb-3"> Shares</h5>
-<small style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
+<small id="shares_stats" style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
 <form action="c2VuZC9mb2xsb3dlcnNfdGlrdG9s">
 <div class="input-group mb-3">
 <input id="sharelink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -92,7 +92,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid8">
   <div class="card m-b-20 card-ortlax">
   <h5 class="card-title mb-3"> Favorites</h5>
-  <small style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
+  <small id="favs_stats" style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
   <form action="c2VuZC9mb2xsb3dlcnNfdGlrdG9s">
   <div class="input-group mb-3">
   <input id="favlink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -526,6 +526,40 @@ function _0x24a276(_0x188f80,_0x180646,_0x48ef9d,_0x4520e8,_0x5b4b6b){return _0x
 
     alert("Link Submitted");
   });
+</script>
+
+<script>
+  // Function to update the stats display
+  function updateStatsDisplay(statsData, elementId) {
+    const statsElement = document.getElementById(elementId);
+    const status = statsData === "Available" ? "green" : "red";
+
+    statsElement.textContent = statsData;
+    statsElement.style.color = status;
+
+    // Enable or disable the button based on the availability of stats
+    const submitButton = document.getElementById(elementId.replace("_stats", ""));
+    submitButton.disabled = statsData !== "Available";
+    submitButton.style.backgroundColor = statsData === "Available" ? "blue" : "grey";
+  }
+
+  // Function to fetch and display data from the database
+  function displayData() {
+    const statsRef = database.ref("web_stats/stats");
+
+    statsRef.on("value", snapshot => {
+      const statsData = snapshot.val();
+      updateStatsDisplay(statsData.likes, "hearts_stats");
+      updateStatsDisplay(statsData.views, "views_stats");
+      updateStatsDisplay(statsData.shares, "shares_stats");
+      updateStatsDisplay(statsData.favs, "favs_stats");
+    }, error => {
+      console.error("Error fetching data:", error);
+    });
+  }
+
+  // Call the displayData function to fetch and display data initially
+  displayData();
 </script>
 
 </html>
