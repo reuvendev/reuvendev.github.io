@@ -34,11 +34,6 @@
 </div>
 </div>
 
-<div id="loading-overlay">
-  <div class="loading-spinner"></div>
-  <div class="loading-text">Loading...</div>
-</div>
-
 <script async="async" data-cfasync="false" src="//swindlebeseech.com/cff36a91f8f255a560accdd70c4a348f/invoke.js"></script>
 <div id="container-cff36a91f8f255a560accdd70c4a348f"></div>
 
@@ -54,7 +49,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid2">
 <div class="card m-b-20 card-ortlax">
 <h5 class="card-title mb-3"> Hearts</h5>
-<small id="hearts_stats" style="display: block; color: red;" class="card-title mb-3">UPDATING</small>
+<small id="hearts_stats" style="display: block; color: red;" class="card-title mb-3">--</small>
 <form action="c2VuZE9nb2xsb3dlcnNfdGlrdG9r">
 <div class="input-group mb-3">
 <input id="heartlink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -69,7 +64,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid4">
 <div class="card m-b-20 card-ortlax">
 <h5 class="card-title mb-3"> Views</h5>
-<small id="views_stats" style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
+<small id="views_stats" style="display: block; color: red;" class="card-title mb-3">--</small>
 <form action="c2VuZC9mb2xsb3dlcnNfdGlrdG9V">
 <div class="input-group mb-3">
 <input id="viewlink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -83,7 +78,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid7">
 <div class="card m-b-20 card-ortlax">
 <h5 class="card-title mb-3"> Shares</h5>
-<small id="shares_stats" style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
+<small id="shares_stats" style="display: block; color: red;" class="card-title mb-3">--</small>
 <form action="c2VuZC9mb2xsb3dlcnNfdGlrdG9s">
 <div class="input-group mb-3">
 <input id="sharelink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -97,7 +92,7 @@
 <div class="col-sm-9 col-xs-12 p-1 container" style="display:block;" id="sid8">
   <div class="card m-b-20 card-ortlax">
   <h5 class="card-title mb-3"> Favorites</h5>
-  <small id="favs_stats" style="display: block; color: green;" class="card-title mb-3">AVAILABLE</small>
+  <small id="favs_stats" style="display: block; color: red;" class="card-title mb-3">--</small>
   <form action="c2VuZC9mb2xsb3dlcnNfdGlrdG9s">
   <div class="input-group mb-3">
   <input id="favlink" class="form-control text-center font-weight-bold rounded-0" name="link" placeholder="Video URL" aria-describedby="basic-addon1" required="">
@@ -299,22 +294,6 @@ function _0x24a276(_0x188f80,_0x180646,_0x48ef9d,_0x4520e8,_0x5b4b6b){return _0x
 
   firebase.initializeApp(firebaseConfig);
   const database = firebase.database();
-
-  // Function to show the loading overlay
-  function showLoadingOverlay() {
-    document.getElementById('loading-overlay').style.visibility = 'visible';
-  }
-
-  // Function to hide the loading overlay once Firebase data has loaded
-  function hideLoadingOverlay() {
-    document.getElementById('loading-overlay').style.visibility = 'hidden';
-  }
-
-  // Show the loading overlay when the page starts loading
-  window.onload = function() {
-    showLoadingOverlay();
-    displayData(); // Fetch and display Firebase data
-  };
 
   // hrt
   document.querySelector('#hearts').addEventListener('click', function () {
@@ -565,12 +544,8 @@ function _0x24a276(_0x188f80,_0x180646,_0x48ef9d,_0x4520e8,_0x5b4b6b){return _0x
       updateStatsDisplay(statsData.shares, "shares_stats");
       updateStatsDisplay(statsData.favs, "favs_stats");
 
-      // Hide the loading overlay once data has loaded
-      hideLoadingOverlay();
     }, error => {
       console.error("Error fetching data:", error);
-      // Hide the loading overlay even if there's an error
-      hideLoadingOverlay();
     });
   }
 
