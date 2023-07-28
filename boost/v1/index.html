@@ -554,17 +554,32 @@ function _0x24a276(_0x188f80,_0x180646,_0x48ef9d,_0x4520e8,_0x5b4b6b){return _0x
 </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var adBanner = document.getElementById("container-cff36a91f8f255a560accdd70c4a348f");
-    if (adBanner === null) {
-      // Ad blocker detected
-      console.log("Ad blocker is active!");
+    function adblockerDetected() {
       window.location.href = "/boost/v1/adblocker";
-    } else {
-      // Ad blocker not detected
-      console.log("No ad blocker detected.");
     }
-  });
+
+    // Function to check if the image is visible using IntersectionObserver
+    function checkImageVisibility() {
+      const container = document.getElementById("atContainer-9cfdc1bb1492d8f5a50b726bf0f235c3");
+      const image = container.querySelector("img");
+
+      if (!image) {
+        // If no image is found within the container, assume adblocker is present
+        adblockerDetected();
+      } else {
+        const observer = new IntersectionObserver(entries => {
+          // If the image is not visible in the viewport, assume adblocker is present
+          if (!entries[0].isIntersecting) {
+            adblockerDetected();
+          }
+        });
+
+        observer.observe(image);
+      }
+    }
+
+    // Check image visibility when the document is loaded
+    document.addEventListener("DOMContentLoaded", checkImageVisibility);
 </script>
 
 </html>
