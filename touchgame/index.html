@@ -29,8 +29,11 @@
 <body>
     <script>
         const circles = {};
+        let lockTimeout = null;
+        let selectionTimeout = null;
 
         document.addEventListener('touchstart', function(event) {
+            clearTimeout(selectionTimeout);
             for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
                 if (!circles[touch.identifier]) {
@@ -55,6 +58,10 @@
                     removeCircle(touch.identifier);
                 }
             }
+            if (Object.keys(circles).length === 0) {
+                clearTimeout(lockTimeout);
+                clearTimeout(selectionTimeout);
+            }
         });
 
         function createCircle(id, x, y) {
@@ -66,24 +73,13 @@
             document.body.appendChild(circle);
             circles[id] = circle;
 
-            setTimeout(() => {
-                if (circle.parentElement) {
-                    circle.classList.add('locked');
-                }
+            if (lockTimeout) {
+                clearTimeout(lockTimeout);
+            }
+            lockTimeout = setTimeout(() => {
+                Object.values(circles).forEach(c => c.classList.add('locked'));
+                startSelectionTimer();
             }, 3000);
-
-            setTimeout(() => {
-                const circleElements = Object.values(circles);
-                const randomCircle = circleElements[Math.floor(Math.random() * circleElements.length)];
-                circleElements.forEach(c => {
-                    if (c !== randomCircle) {
-                        c.remove();
-                        delete circles[c.dataset.id];
-                    } else {
-                        c.classList.add('chosen');
-                    }
-                });
-            }, 6000);
         }
 
         function updateCircle(id, x, y) {
@@ -99,6 +95,22 @@
                 delete circles[id];
             }
         }
+
+        function startSelectionTimer() {
+            selectionTimeout = setTimeout(() => {
+                const circleElements = Object.values(circles);
+                const randomCircle = circleElements[Math.floor(Math.random() * circleElements.length)];
+                circleElements.forEach(c => {
+                    if (c !== randomCircle) {
+                        c.remove();
+                        delete circles[c.dataset.id];
+                    } else {
+                        c.classList.add('chosen');
+                    }
+                });
+            }, 3000);
+        }
     </script>
 </body>
 </html>
+10
