@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finger Touch Game</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            overflow: hidden;
+        }
+        .circle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+            transform: translate(-50%, -50%);
+        }
+        .locked {
+            background-color: blue;
+        }
+        .chosen {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const circles = {};
+
+        document.addEventListener('touchstart', function(event) {
+            for (let i = 0; i < event.touches.length; i++) {
+                const touch = event.touches[i];
+                if (!circles[touch.identifier]) {
+                    createCircle(touch.identifier, touch.clientX, touch.clientY);
+                }
+            }
+        });
+
+        document.addEventListener('touchmove', function(event) {
+            for (let i = 0; i < event.touches.length; i++) {
+                const touch = event.touches[i];
+                if (circles[touch.identifier]) {
+                    updateCircle(touch.identifier, touch.clientX, touch.clientY);
+                }
+            }
+        });
+
+        document.addEventListener('touchend', function(event) {
+            for (let i = 0; i < event.changedTouches.length; i++) {
+                const touch = event.changedTouches[i];
+                if (circles[touch.identifier]) {
+                    removeCircle(touch.identifier);
+                }
+            }
+        });
+
+        function createCircle(id, x, y) {
+            const circle = document.createElement('div');
+            circle.classList.add('circle');
+            circle.style.left = `${x}px`;
+            circle.style.top = `${y}px`;
+            circle.dataset.id = id;
+            document.body.appendChild(circle);
+            circles[id] = circle;
+
+            setTimeout(() => {
+                if (circle.parentElement) {
+                    circle.classList.add('locked');
+                }
+            }, 3000);
+
+            setTimeout(() => {
+                const circleElements = Object.values(circles);
+                const randomCircle = circleElements[Math.floor(Math.random() * circleElements.length)];
+                circleElements.forEach(c => {
+                    if (c !== randomCircle) {
+                        c.remove();
+                        delete circles[c.dataset.id];
+                    } else {
+                        c.classList.add('chosen');
+                    }
+                });
+            }, 6000);
+        }
+
+        function updateCircle(id, x, y) {
+            const circle = circles[id];
+            circle.style.left = `${x}px`;
+            circle.style.top = `${y}px`;
+        }
+
+        function removeCircle(id) {
+            const circle = circles[id];
+            if (circle) {
+                circle.remove();
+                delete circles[id];
+            }
+        }
+    </script>
+</body>
+</html>
