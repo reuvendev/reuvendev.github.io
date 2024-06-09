@@ -32,12 +32,14 @@
     </style>
 </head>
 <body>
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    <script>
         // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
             apiKey: "AIzaSyDNFiqe0ssOma0jB-S36tX0wLpUK9Lt9yw",
             authDomain: "reuvendev-5aa9c.firebaseapp.com",
@@ -50,8 +52,9 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
 
         let playerName = localStorage.getItem('playerName');
         if (!playerName) {
@@ -160,27 +163,7 @@
                 });
             }, 3000);
         }
-
-        db.ref('circles').on('child_added', (data) => {
-            const circleData = data.val();
-            if (!circles[data.key]) {
-                createCircle(data.key, circleData.x, circleData.y);
-                circles[data.key].innerHTML = circleData.playerName;
-            }
-        });
-
-        db.ref('circles').on('child_changed', (data) => {
-            const circleData = data.val();
-            if (circles[data.key]) {
-                updateCircle(data.key, circleData.x, circleData.y);
-            }
-        });
-
-        db.ref('circles').on('child_removed', (data) => {
-            if (circles[data.key]) {
-                removeCircle(data.key);
-            }
-        });
     </script>
 </body>
 </html>
+
