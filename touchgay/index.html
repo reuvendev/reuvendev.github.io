@@ -29,14 +29,26 @@
         .chosen {
             background-color: green;
         }
+        #leaderboard {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: white;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
+    <div id="leaderboard">
+        <h3>Leaderboard</h3>
+        <ul id="players"></ul>
+    </div>
+
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, onChildAdded, onChildChanged, onChildRemoved } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -68,21 +80,74 @@
         }
 
         const circles = {};
-        let lockTimeout = null;
-        let selectionTimeout = null;
+        const players = {};
+
+        // Update leaderboard
+        function updateLeaderboard() {
+            const playersList = document.getElementById('players');
+            playersList.innerHTML = '';
+            Object.keys(players).forEach(key => {
+                const player = players[key];
+                const listItem = document.createElement('li');
+                listItem.textContent = player.name + (player.eliminated ? ' (Eliminated)' : '');
+                playersList.appendChild(listItem);
+            });
+        }
+
+        // Listen for new player circles
+        onChildAdded(ref(db, 'circles'), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const { playerName, x, y } = data;
+                if (playerName !== playerName) {
+                    const circle = document.createElement('div');
+                    circle.classList.add('circle');
+                    circle.style.left = `${x}px`;
+                    circle.style.top = `${y}px`;
+                    circle.innerHTML = playerName;
+                    document.body.appendChild(circle);
+                    circles[snapshot.key] = circle;
+
+                    // Add player to the leaderboard
+                    players[snapshot.key] = { name: playerName, eliminated: false };
+                    updateLeaderboard();
+                }
+            }
+        });
+
+        // Listen for changes in player circles
+        onChildChanged(ref(db, 'circles'), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const { playerName, x, y } = data;
+                if (circles[snapshot.key]) {
+                    circles[snapshot.key].style.left = `${x}px`;
+                    circles[snapshot.key].style.top = `${y}px`;
+                }
+            }
+        });
+
+        // Listen for removed player circles
+        onChildRemoved(ref(db, 'circles'), (snapshot) => {
+            if (circles[snapshot.key]) {
+                circles[snapshot.key].remove();
+                delete circles[snapshot.key];
+
+                // Update leaderboard when player is eliminated
+                players[snapshot.key].eliminated = true;
+                updateLeaderboard();
+            }
+        });
 
         document.addEventListener('touchstart', function(event) {
-            clearTimeout(selectionTimeout);
             for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
-                if (!circles[touch.identifier]) {
-                    createCircle(touch.identifier, touch.clientX, touch.clientY);
-                    db.ref('circles/' + touch.identifier).set({
-                        playerName: playerName,
-                        x: touch.clientX,
-                        y: touch.clientY
-                    });
-                }
+                createCircle(touch.identifier, touch.clientX, touch.clientY);
+                db.ref('circles/' + touch.identifier).set({
+                    playerName: playerName,
+                    x: touch.clientX,
+                    y: touch.clientY
+                });
             }
         });
 
@@ -103,13 +168,10 @@
             for (let i = 0; i < event.changedTouches.length; i++) {
                 const touch = event.changedTouches[i];
                 if (circles[touch.identifier]) {
-                    removeCircle(touch.identifier);
+                    circles[touch.identifier].remove();
+                    delete circles[touch.identifier];
                     db.ref('circles/' + touch.identifier).remove();
                 }
-            }
-            if (Object.keys(circles).length === 0) {
-                clearTimeout(lockTimeout);
-                clearTimeout(selectionTimeout);
             }
         });
 
@@ -118,18 +180,9 @@
             circle.classList.add('circle');
             circle.style.left = `${x}px`;
             circle.style.top = `${y}px`;
-            circle.dataset.id = id;
             circle.innerHTML = playerName;
             document.body.appendChild(circle);
             circles[id] = circle;
-
-            if (lockTimeout) {
-                clearTimeout(lockTimeout);
-            }
-            lockTimeout = setTimeout(() => {
-                Object.values(circles).forEach(c => c.classList.add('locked'));
-                startSelectionTimer();
-            }, 3000);
         }
 
         function updateCircle(id, x, y) {
@@ -137,33 +190,6 @@
             circle.style.left = `${x}px`;
             circle.style.top = `${y}px`;
         }
-
-        function removeCircle(id) {
-            const circle = circles[id];
-            if (circle) {
-                circle.remove();
-                delete circles[id];
-            }
-        }
-
-        function startSelectionTimer() {
-            selectionTimeout = setTimeout(() => {
-                const circleElements = Object.values(circles);
-                const randomCircle = circleElements[Math.floor(Math.random() * circleElements.length)];
-                circleElements.forEach(c => {
-                    if (c !== randomCircle) {
-                        const playerName = c.innerHTML;
-                        alert(`${playerName} is eliminated!`);
-                        c.remove();
-                        delete circles[c.dataset.id];
-                        db.ref('circles/' + c.dataset.id).remove();
-                    } else {
-                        c.classList.add('chosen');
-                    }
-                });
-            }, 3000);
-        }
     </script>
 </body>
 </html>
-
