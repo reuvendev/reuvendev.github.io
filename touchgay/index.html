@@ -22,6 +22,15 @@
             justify-content: center;
             align-items: center;
             font-weight: bold;
+            font-size: 16px;
+        }
+        .circle-name {
+            position: absolute;
+            top: calc(100% + 10px); /* Position the name outside the bottom of the circle */
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
         }
         .locked {
             background-color: blue;
@@ -95,7 +104,7 @@
         }
 
         // Listen for new player circles
-        onChildAdded(ref(db, 'circles'), (snapshot) => {
+        onChildAdded(ref(db, 'players'), (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 const { playerName, x, y } = data;
@@ -104,8 +113,11 @@
                     circle.classList.add('circle');
                     circle.style.left = `${x}px`;
                     circle.style.top = `${y}px`;
-                    circle.innerHTML = playerName;
                     document.body.appendChild(circle);
+                    const circleName = document.createElement('div');
+                    circleName.classList.add('circle-name');
+                    circleName.textContent = playerName;
+                    circle.appendChild(circleName);
                     circles[snapshot.key] = circle;
 
                     // Add player to the leaderboard
@@ -116,10 +128,10 @@
         });
 
         // Listen for changes in player circles
-        onChildChanged(ref(db, 'circles'), (snapshot) => {
+        onChildChanged(ref(db, 'players'), (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const { playerName, x, y } = data;
+                const { x, y } = data;
                 if (circles[snapshot.key]) {
                     circles[snapshot.key].style.left = `${x}px`;
                     circles[snapshot.key].style.top = `${y}px`;
@@ -128,7 +140,7 @@
         });
 
         // Listen for removed player circles
-        onChildRemoved(ref(db, 'circles'), (snapshot) => {
+        onChildRemoved(ref(db, 'players'), (snapshot) => {
             if (circles[snapshot.key]) {
                 circles[snapshot.key].remove();
                 delete circles[snapshot.key];
@@ -142,8 +154,9 @@
         document.addEventListener('touchstart', function(event) {
             for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
+                const playerRef = ref(db, 'players/' + touch.identifier);
                 createCircle(touch.identifier, touch.clientX, touch.clientY);
-                set(ref(db, 'circles/' + touch.identifier), {
+                set(playerRef, {
                     playerName: playerName,
                     x: touch.clientX,
                     y: touch.clientY
@@ -156,7 +169,7 @@
                 const touch = event.touches[i];
                 if (circles[touch.identifier]) {
                     updateCircle(touch.identifier, touch.clientX, touch.clientY);
-                    update(ref(db, 'circles/' + touch.identifier), {
+                    update(ref(db, 'players/' + touch.identifier), {
                         x: touch.clientX,
                         y: touch.clientY
                     });
@@ -170,7 +183,7 @@
                 if (circles[touch.identifier]) {
                     circles[touch.identifier].remove();
                     delete circles[touch.identifier];
-                    remove(ref(db, 'circles/' + touch.identifier));
+                    remove(ref(db, 'players/' + touch.identifier));
                 }
             }
         });
@@ -180,8 +193,11 @@
             circle.classList.add('circle');
             circle.style.left = `${x}px`;
             circle.style.top = `${y}px`;
-            circle.innerHTML = playerName;
             document.body.appendChild(circle);
+            const circleName = document.createElement('div');
+            circleName.classList.add('circle-name');
+            circleName.textContent = playerName;
+            circle.appendChild(circleName);
             circles[id] = circle;
         }
 
