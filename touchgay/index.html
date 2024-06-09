@@ -51,8 +51,8 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-        // Ensure the player name is prompted
         let playerName = localStorage.getItem('playerName');
         if (!playerName) {
             playerName = prompt('Enter your name:');
@@ -60,7 +60,7 @@
                 localStorage.setItem('playerName', playerName);
             } else {
                 alert('Name is required to play.');
-                location.reload(); // Reload to prompt again
+                location.reload();
             }
         }
 
@@ -69,13 +69,12 @@
         let selectionTimeout = null;
 
         document.addEventListener('touchstart', function(event) {
-            console.log('touchstart event');
             clearTimeout(selectionTimeout);
             for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
                 if (!circles[touch.identifier]) {
                     createCircle(touch.identifier, touch.clientX, touch.clientY);
-                    firebase.database().ref('circles/' + touch.identifier).set({
+                    db.ref('circles/' + touch.identifier).set({
                         playerName: playerName,
                         x: touch.clientX,
                         y: touch.clientY
@@ -85,12 +84,11 @@
         });
 
         document.addEventListener('touchmove', function(event) {
-            console.log('touchmove event');
             for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
                 if (circles[touch.identifier]) {
                     updateCircle(touch.identifier, touch.clientX, touch.clientY);
-                    firebase.database().ref('circles/' + touch.identifier).update({
+                    db.ref('circles/' + touch.identifier).update({
                         x: touch.clientX,
                         y: touch.clientY
                     });
@@ -99,12 +97,11 @@
         });
 
         document.addEventListener('touchend', function(event) {
-            console.log('touchend event');
             for (let i = 0; i < event.changedTouches.length; i++) {
                 const touch = event.changedTouches[i];
                 if (circles[touch.identifier]) {
                     removeCircle(touch.identifier);
-                    firebase.database().ref('circles/' + touch.identifier).remove();
+                    db.ref('circles/' + touch.identifier).remove();
                 }
             }
             if (Object.keys(circles).length === 0) {
@@ -114,13 +111,12 @@
         });
 
         function createCircle(id, x, y) {
-            console.log('Creating circle:', id, x, y);
             const circle = document.createElement('div');
             circle.classList.add('circle');
             circle.style.left = `${x}px`;
             circle.style.top = `${y}px`;
             circle.dataset.id = id;
-            circle.innerHTML = playerName;  // Show player name inside the circle
+            circle.innerHTML = playerName;
             document.body.appendChild(circle);
             circles[id] = circle;
 
@@ -134,14 +130,12 @@
         }
 
         function updateCircle(id, x, y) {
-            console.log('Updating circle:', id, x, y);
             const circle = circles[id];
             circle.style.left = `${x}px`;
             circle.style.top = `${y}px`;
         }
 
         function removeCircle(id) {
-            console.log('Removing circle:', id);
             const circle = circles[id];
             if (circle) {
                 circle.remove();
@@ -151,48 +145,38 @@
 
         function startSelectionTimer() {
             selectionTimeout = setTimeout(() => {
-                console.log('Selection timer triggered');
                 const circleElements = Object.values(circles);
-                if (circleElements.length > 1) {
-                    const randomCircle = circleElements[Math.floor(Math.random() * circleElements.length)];
-                    circleElements.forEach(c => {
-                        if (c !== randomCircle) {
-                            const playerName = c.innerHTML;
-                            alert(`${playerName} is eliminated!`);
-                            c.remove();
-                            delete circles[c.dataset.id];
-                            firebase.database().ref('circles/' + c.dataset.id).remove();
-                        } else {
-                            c.classList.add('chosen');
-                        }
-                    });
-                } else if (circleElements.length === 1) {
-                    const winner = circleElements[0].innerHTML;
-                    alert(`${winner} wins!`);
-                }
+                const randomCircle = circleElements[Math.floor(Math.random() * circleElements.length)];
+                circleElements.forEach(c => {
+                    if (c !== randomCircle) {
+                        const playerName = c.innerHTML;
+                        alert(`${playerName} is eliminated!`);
+                        c.remove();
+                        delete circles[c.dataset.id];
+                        db.ref('circles/' + c.dataset.id).remove();
+                    } else {
+                        c.classList.add('chosen');
+                    }
+                });
             }, 3000);
         }
 
-        // Firebase listener for other players' circles
-        firebase.database().ref('circles').on('child_added', (data) => {
+        db.ref('circles').on('child_added', (data) => {
             const circleData = data.val();
-            console.log('Child added:', data.key, circleData);
             if (!circles[data.key]) {
                 createCircle(data.key, circleData.x, circleData.y);
                 circles[data.key].innerHTML = circleData.playerName;
             }
         });
 
-        firebase.database().ref('circles').on('child_changed', (data) => {
+        db.ref('circles').on('child_changed', (data) => {
             const circleData = data.val();
-            console.log('Child changed:', data.key, circleData);
             if (circles[data.key]) {
                 updateCircle(data.key, circleData.x, circleData.y);
             }
         });
 
-        firebase.database().ref('circles').on('child_removed', (data) => {
-            console.log('Child removed:', data.key);
+        db.ref('circles').on('child_removed', (data) => {
             if (circles[data.key]) {
                 removeCircle(data.key);
             }
@@ -200,4 +184,3 @@
     </script>
 </body>
 </html>
-10.12.2
