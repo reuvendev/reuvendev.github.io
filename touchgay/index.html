@@ -57,7 +57,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getDatabase, ref, onChildAdded, onChildChanged, onChildRemoved, set, update, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, onChildAdded, onChildChanged, onChildRemoved, update, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -103,8 +103,9 @@
             });
         }
 
-        // Listen for new player circles
+        // Listen for new player data and update circles
         onChildAdded(ref(db, 'players'), (snapshot) => {
+            const playerId = snapshot.key;
             const data = snapshot.val();
             if (data) {
                 const { playerName, x, y } = data;
@@ -118,61 +119,41 @@
                     circleName.classList.add('circle-name');
                     circleName.textContent = playerName;
                     circle.appendChild(circleName);
-                    circles[snapshot.key] = circle;
+                    circles[playerId] = circle;
 
                     // Add player to the leaderboard
-                    players[snapshot.key] = { name: playerName, eliminated: false };
+                    players[playerId] = { name: playerName, eliminated: false };
                     updateLeaderboard();
                 }
             }
         });
 
-        // Listen for changes in player circles
-        onChildChanged(ref(db, 'players'), (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                const { x, y } = data;
-                if (circles[snapshot.key]) {
-                    circles[snapshot.key].style.left = `${x}px`;
-                    circles[snapshot.key].style.top = `${y}px`;
-                }
-            }
-        });
-
-        // Listen for removed player circles
-        onChildRemoved(ref(db, 'players'), (snapshot) => {
-            if (circles[snapshot.key]) {
-                circles[snapshot.key].remove();
-                delete circles[snapshot.key];
-
-                // Update leaderboard when player is eliminated
-                players[snapshot.key].eliminated = true;
-                updateLeaderboard();
-            }
-        });
+        // Update player data when moving circles
+        function updatePlayerData(id, x, y) {
+            const playerRef = ref(db, 'players/' + id);
+            update(playerRef, {
+                playerName: playerName,
+                x: x,
+                y: y
+            });
+        }
 
         document.addEventListener('touchstart', function(event) {
             for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
-                const playerRef = ref(db, 'players/' + touch.identifier);
-                createCircle(touch.identifier, touch.clientX, touch.clientY);
-                set(playerRef, {
-                    playerName: playerName,
-                    x: touch.clientX,
-                    y: touch.clientY
-                });
+                const playerId = touch.identifier;
+                createCircle(playerId, touch.clientX, touch.clientY);
+                updatePlayerData(playerId, touch.clientX, touch.clientY);
             }
         });
 
         document.addEventListener('touchmove', function(event) {
             for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
-                if (circles[touch.identifier]) {
-                    updateCircle(touch.identifier, touch.clientX, touch.clientY);
-                    update(ref(db, 'players/' + touch.identifier), {
-                        x: touch.clientX,
-                        y: touch.clientY
-                    });
+                const playerId = touch.identifier;
+                if (circles[playerId]) {
+                    updateCircle(playerId, touch.clientX, touch.clientY);
+                    updatePlayerData(playerId, touch.clientX, touch.clientY);
                 }
             }
         });
@@ -180,15 +161,16 @@
         document.addEventListener('touchend', function(event) {
             for (let i = 0; i < event.changedTouches.length; i++) {
                 const touch = event.changedTouches[i];
-                if (circles[touch.identifier]) {
-                    circles[touch.identifier].remove();
-                    delete circles[touch.identifier];
-                    remove(ref(db, 'players/' + touch.identifier));
+                const playerId = touch.identifier;
+                if (circles[playerId]) {
+                    circles[playerId].remove();
+                    delete circles[playerId];
+                    remove(ref(db, 'players/' + playerId));
                 }
             }
         });
 
-        function createCircle(id, x, y) {
+        function createCircle(playerId, x, y) {
             const circle = document.createElement('div');
             circle.classList.add('circle');
             circle.style.left = `${x}px`;
@@ -198,11 +180,11 @@
             circleName.classList.add('circle-name');
             circleName.textContent = playerName;
             circle.appendChild(circleName);
-            circles[id] = circle;
+            circles[playerId] = circle;
         }
 
-        function updateCircle(id, x, y) {
-            const circle = circles[id];
+        function updateCircle(playerId, x, y) {
+            const circle = circles[playerId];
             circle.style.left = `${x}px`;
             circle.style.top = `${y}px`;
         }
