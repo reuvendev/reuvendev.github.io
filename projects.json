@@ -11,7 +11,7 @@
     {
       "statusDots": ["red", "yellow", "green"],
       "title": "My Portfolio",
-      "imageSrc": "assets/img/myportfolio.png",
+      "imageSrc": "assets/img/projects/myportfolio.png",
       "description": "Simple portfolio website, where I share my projects and skills.",
       "tech": "Website",
       "codeLink": "#"
