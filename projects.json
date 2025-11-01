@@ -1,0 +1,30 @@
+{
+  "currentProjects": [
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "Escape Key",
+      "imageSrc": "assets/img/projects/escapekey.png",
+      "description": "A horror game where player/s must complete different tasks and challenges to escape.",
+      "tech": "Mobile Game",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "My Portfolio",
+      "imageSrc": "assets/img/myportfolio.jpg",
+      "description": "Simple portfolio website, where I share my projects and skills.",
+      "tech": "Website",
+      "codeLink": "#"
+    }
+  ],
+  "completedProjects": [
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "Coming soon",
+      "imageSrc": "assets/img/placeholder.jpg",
+      "description": "N/A",
+      "tech": "N/A",
+      "codeLink": "#"
+    }
+  ]
+}
