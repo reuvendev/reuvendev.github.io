@@ -83,7 +83,7 @@
                         ${dotsHtml}
                         <span>${project.title}</span>
                     </div>
-                    <img src="${project.imageSrc}" alt="${project.title} project image" class="w-full h-32 object-cover rounded-lg mb-4" />
+                    <img src="${project.imageSrc}" alt="${project.title} project image" class="w-full h-42 object-cover rounded-lg mb-4" />
                     <h3 class="text-lg font-semibold text-blue mb-2">${project.title}</h3>
                     <p class="text-gray-300 text-sm mb-3">${project.description}</p>
                     <div class="text-green-400 text-sm mb-3">// ${project.tech}</div>
@@ -95,7 +95,7 @@
     }
 
     // Load project data from JSON file and render
-    fetch('projects.json')
+    fetch('projects.json?v=' + Date.now())
         .then(response => response.json())
         .then(data => {
             renderProjects('current-projects-container', data.currentProjects);

@@ -31,7 +31,7 @@
     {
       "statusDots": ["red", "yellow", "green"],
       "title": "San Jose Chronicles Polo",
-      "imageSrc": "assets/img/graphicDesigns/sjcPolo.jpg",
+      "imageSrc": "assets/img/graphicDesigns/sjcPolo.png",
       "description": "Polo design for San Jose Chronicles",
       "tech": "Polo design",
       "codeLink": ""
