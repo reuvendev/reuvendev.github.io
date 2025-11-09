@@ -87,7 +87,7 @@
     {
       "statusDots": ["red", "yellow", "green"],
       "title": "SLU BSCE LANYARD 1",
-      "imageSrc": "assets/img/graphicDesigns/sluBSITV1.png",
+      "imageSrc": "assets/img/graphicDesigns/sluBSCE.png",
       "description": "Customized lanyard design for BSCE",
       "tech": "Lanyard design",
       "codeLink": ""
