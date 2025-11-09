@@ -100,6 +100,7 @@
         .then(data => {
             renderProjects('current-projects-container', data.currentProjects);
             renderProjects('completed-projects-container', data.completedProjects);
+            renderProjects('graphic-design-projects-container', data.graphicProjects);
         })
         .catch(error => {
             console.error('Error loading project data:', error);

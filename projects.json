@@ -14,7 +14,7 @@
       "imageSrc": "assets/img/projects/escapekey.png",
       "description": "A horror game where player/s must complete different tasks and challenges to escape.",
       "tech": "Mobile Game",
-      "codeLink": ""
+      "codeLink": "#"
     }
   ],
   "completedProjects": [
@@ -24,7 +24,17 @@
       "imageSrc": "assets/img/placeholder.jpg",
       "description": "N/A",
       "tech": "N/A",
-      "codeLink": ""
+      "codeLink": "#"
+    }
+  ],
+  "graphicProjects": [
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "test",
+      "imageSrc": "assets/img/placeholder.jpg",
+      "description": "N/A",
+      "tech": "N/A",
+      "codeLink": "#"
     }
   ]
 }
