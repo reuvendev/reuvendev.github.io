@@ -98,9 +98,9 @@
     fetch('projects.json')
         .then(response => response.json())
         .then(data => {
-            renderProjects('graphicdesign-projects-container', data.graphicProjects);
             renderProjects('current-projects-container', data.currentProjects);
             renderProjects('completed-projects-container', data.completedProjects);
+            renderProjects('graphicdesign-projects-container', data.graphicProjects);
         })
         .catch(error => {
             console.error('Error loading project data:', error);
