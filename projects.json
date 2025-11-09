@@ -30,11 +30,35 @@
   "graphicProjects": [
     {
       "statusDots": ["red", "yellow", "green"],
-      "title": "test",
-      "imageSrc": "assets/img/placeholder.jpg",
-      "description": "N/A",
-      "tech": "N/A",
-      "codeLink": "#"
+      "title": "San Jose Chronicles Polo",
+      "imageSrc": "assets/img/graphicDesigns/sjcPolo.jpg",
+      "description": "Polo design for San Jose Chronicles",
+      "tech": "Polo design",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "Sketch Club Polo",
+      "imageSrc": "assets/img/graphicDesigns/csjaSketchClub.png",
+      "description": "Polo design for Colegio San Jose De Alaminos' Sketch Club",
+      "tech": "Polo design",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "HUMSS Polo",
+      "imageSrc": "assets/img/graphicDesigns/humssPolo.jpg",
+      "description": "Polo design HUMSS strand",
+      "tech": "Polo design",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "STEM Polo",
+      "imageSrc": "assets/img/graphicDesigns/stemPolo.jpg",
+      "description": "Polo design STEM strand",
+      "tech": "Polo design",
+      "codeLink": ""
     }
   ]
 }
