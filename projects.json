@@ -48,7 +48,7 @@
       "statusDots": ["red", "yellow", "green"],
       "title": "HUMSS Polo",
       "imageSrc": "assets/img/graphicDesigns/humssPolo.jpg",
-      "description": "Polo design HUMSS strand",
+      "description": "Polo design for HUMSS strand",
       "tech": "Polo design",
       "codeLink": ""
     },
@@ -56,8 +56,16 @@
       "statusDots": ["red", "yellow", "green"],
       "title": "STEM Polo",
       "imageSrc": "assets/img/graphicDesigns/stemPolo.jpg",
-      "description": "Polo design STEM strand",
+      "description": "Polo design for STEM strand",
       "tech": "Polo design",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "Solarian Knights Jersey",
+      "imageSrc": "assets/img/graphicDesigns/skJersey.png",
+      "description": "Solarian Knights' Jersey design for Intramurals",
+      "tech": "Jersey design",
       "codeLink": ""
     }
   ]
