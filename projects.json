@@ -67,6 +67,30 @@
       "description": "Solarian Knights' Jersey design for Intramurals",
       "tech": "Jersey design",
       "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "SLU BSIT LANYARD 1",
+      "imageSrc": "assets/img/graphicDesigns/sluBSITV1.png",
+      "description": "Customized lanyard design for BSIT",
+      "tech": "Lanyard design",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "SLU BSIT LANYARD 2",
+      "imageSrc": "assets/img/graphicDesigns/sluBSITV2.png",
+      "description": "Customized lanyard design for BSIT",
+      "tech": "Lanyard design",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "SLU BSCE LANYARD 1",
+      "imageSrc": "assets/img/graphicDesigns/sluBSITV1.png",
+      "description": "Customized lanyard design for BSCE",
+      "tech": "Lanyard design",
+      "codeLink": ""
     }
   ]
 }
