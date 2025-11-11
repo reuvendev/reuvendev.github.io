@@ -32,7 +32,7 @@
       "statusDots": ["red", "yellow", "green"],
       "title": "San Jose Chronicles Polo",
       "imageSrc": "assets/img/graphicDesigns/sjcPolo.png",
-      "description": "Polo design for San Jose Chronicles",
+      "description": "Polo design made for San Jose Chronicles.",
       "tech": "Polo design",
       "codeLink": ""
     },
@@ -40,7 +40,7 @@
       "statusDots": ["red", "yellow", "green"],
       "title": "Sketch Club Polo",
       "imageSrc": "assets/img/graphicDesigns/csjaSketchClub.png",
-      "description": "Polo design for Colegio San Jose De Alaminos' Sketch Club",
+      "description": "Polo design for Colegio San Jose De Alaminos’ Sketch Club.",
       "tech": "Polo design",
       "codeLink": ""
     },
