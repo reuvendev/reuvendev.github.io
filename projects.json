@@ -20,7 +20,7 @@
       "statusDots": ["red", "yellow", "green"],
       "title": "Smart Senior Care",
       "imageSrc": "assets/img/projects/smartseniorcare.png",
-      "description": "A student project in development for Introduction to Computing, designed to help seniors live healthier and more independent lives through technology. It features telehealth, wearable monitoring, smart sensors, and AI support. Developed by Reuven Jimenez, Sire Aldrin Abud, Ashley Nicole Lacasandile, Craine Arzue Quiming, and Khenn Aeron Deguil.",
+      "description": "A student project for Introduction to Computing, aimed at helping seniors live healthier and more independent lives through telehealth, wearables, smart sensors, and AI. Developed by Reuven Jimenez, Sire Aldrin Abud, Ashley Nicole Lacasandile, Craine Arzue Quiming, and Khenn Aeron Deguil.",
       "tech": "Website",
       "codeLink": ""
     }
