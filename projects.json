@@ -70,6 +70,14 @@
     },
     {
       "statusDots": ["red", "yellow", "green"],
+      "title": "Xcode Tshirt Design",
+      "imageSrc": "assets/img/graphicDesigns/xcodeTshirtV3.jpg",
+      "description": "Version 3 of Xcode Tshirt",
+      "tech": "Tshirt design",
+      "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
       "title": "SLU BSIT LANYARD 1",
       "imageSrc": "assets/img/graphicDesigns/sluBSITV1.png",
       "description": "Customized lanyard design for BSIT",
