@@ -71,7 +71,7 @@
     {
       "statusDots": ["red", "yellow", "green"],
       "title": "Xcode Tshirt Design",
-      "imageSrc": "assets/img/graphicDesigns/xcodeTshirtV3.jpg",
+      "imageSrc": "assets/img/graphicDesigns/xcodeTshirtV3.jpg?v=2",
       "description": "Version 3 of Xcode Tshirt",
       "tech": "Tshirt design",
       "codeLink": ""
