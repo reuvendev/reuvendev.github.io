@@ -86,7 +86,7 @@
     },
     {
       "statusDots": ["red", "yellow", "green"],
-      "title": "SLU BSIT LANYARD 1",
+      "title": "SLU BSIT LANYARD V.1 (UNOFFICIAL)",
       "imageSrc": "assets/img/graphicDesigns/sluBSITV1.png",
       "description": "Customized lanyard design for BSIT",
       "tech": "Lanyard design",
@@ -94,7 +94,7 @@
     },
     {
       "statusDots": ["red", "yellow", "green"],
-      "title": "SLU BSIT LANYARD 2",
+      "title": "SLU BSIT LANYARD V.2 (UNOFFICIAL)",
       "imageSrc": "assets/img/graphicDesigns/sluBSITV2.png",
       "description": "Customized lanyard design for BSIT",
       "tech": "Lanyard design",
@@ -102,7 +102,7 @@
     },
     {
       "statusDots": ["red", "yellow", "green"],
-      "title": "SLU BSCE LANYARD 1",
+      "title": "SLU BSCE LANYARD v.1 (UNOFFICIAL)",
       "imageSrc": "assets/img/graphicDesigns/sluBSCE.png",
       "description": "Customized lanyard design for BSCE",
       "tech": "Lanyard design",
