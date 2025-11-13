@@ -87,6 +87,7 @@
                     <h3 class="text-lg font-semibold text-blue mb-2">${project.title}</h3>
                     <p class="text-gray-300 text-sm mb-3">${project.description}</p>
                     <div class="text-green-400 text-sm mb-3">// ${project.tech}</div>
+                    <div class="text-green-400 text-sm mb-3">${project.status}</div>
                     ${codeLinkHtml}
                 </div>
             `;
