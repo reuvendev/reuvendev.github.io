@@ -8,6 +8,15 @@
       "tech": "Website",
       "status": "",
       "codeLink": ""
+    },
+    {
+      "statusDots": ["red", "yellow", "green"],
+      "title": "Battleship",
+      "imageSrc": "assets/img/projects/battleship.png",
+      "description": "A classic 2-player strategy game where each player secretly places their ships on a grid. Take turns guessing coordinates to find and sink your opponent’s ships.",
+      "tech": "Mobile Game",
+      "status": "In development",
+      "codeLink": ""
     }
   ],
   "completedProjects": [
